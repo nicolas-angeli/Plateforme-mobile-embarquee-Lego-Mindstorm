@@ -1,0 +1,13 @@
+LeJosRT is a replacement firmware for LEGO Mindstorms NXT bricks. This is a fork of leJos with RTSJ (Real-Time Specification for Java) implementation. 
+
+LeJosRT, as leJos, is a tiny Java Virtual Machine which was ported to the LEGO NXT brick. It includes all the classes in the API as well as the tools used to upload code to the NXT brick.
+
+This project was created by :
+- Benoit Bousquet
+- Aravindan Mahendran
+- Arnaud Delalande 
+- Clément Beslon
+- Loïc Bodilis
+- Xavier Dalla-Vecchia
+
+It is supported by the AlgoTR group of the Gaspard-Monge institute of electronics and computer science in partnership with ESIEE engineering.

@@ -1,0 +1,18 @@
+LeJosRT 2.0:
+Bugs corrected :
+- Cost Overrun don't stop the system anymore. Realtime threads concerned leave the queue of waiting start.
+(void dequeue_rt_thread(RealtimeThread *rtthread) modified)
+
+LeJosRT 1.9:
+- included Dynamic Approximate Slack Stealer (DASS) and Minimal Approximate Slack Stealer (MASS). To learn how to use these algorithms, go to www.lejosrt.org. No algorithm is activated by default.
+
+LeJosRT 1.1 :
+- included new classes : EnergyRealtimeThread, EnergyParameters
+- Simple simulation of a battery
+- No algorithms of management of energy
+
+
+LeJosRT 1.0 :
+- basic version of LeJosRT
+- included most of RTSJ (Real-Time Specifications for Java)
+- beta version. 

@@ -1,0 +1,120 @@
+**************************************************************************************
+
+	Guide d'installation et d'utilisation de LeJosRT
+
+***************************************************************************************
+
+LeJosRT est une machine virtuelle temps réel open source pour le contrôleur Lego NXT.
+Elle respecte les spécifications RTSJ (RealTime Specification for Java).
+
+Ce guide a été réalisé sous Ubuntu 10.04 et décrit les étapes nécessaires pour installer 
+LeJosRT ainsi que pour uploader des programmes sur la brique Lego NXT.
+
+Pour plus de détails sur la programmation du robot, consulter :
+http://lejos.sourceforge.net/nxt/nxj/tutorial/index.htm
+
+****************************************************************************************
+
+1. Prérequis
+2. Installation du compilateur arm-elf
+3. Installation de LeJosRT
+4. Compilation et lancement de programmes sur la brique Lego NXT
+5. Mises à jour / Modifications des sources de LeJosRT
+
+****************************************************************************************
+
+1. Prérequis :
+--------------
+
+- installer le paquet "default-jdk" ainsi que ses dépendances afin d'obtenir la dernière version 
+de JDK et de JRE
+- installer les paquets suivants ainsi que leurs dépendances :
+	* libusb-0.1-4
+	* libusb-dev
+	* libobexftp0-dev
+	* gcj
+	* ant-gcj
+	* bluez
+	* libbluetooth-dev
+	* libbluetooth3
+- accès aux outils USB : créer un fichier 70-lego.rules dans /etc/udev/rules.d/ contenant :
+	# Lego NXT
+	BUS=="usb", SYSFS{idVendor}=="03eb", GROUP="lego", MODE="0660"
+	BUS=="usb", SYSFS{idVendor}=="0694", GROUP="lego", MODE="0660" 
+- créer un groupe "lego" et ajouter les utilisateurs concernés
+- télécharger LeJosRT et le décompresser dans le répertoire de son choix
+- vérifier que le répertoire /lejosRT/lejos_rt/bin/ et ses fichiers disposent des droits d'exécution
+- modifier les variables d'environnement en ajoutant à la fin du fichier /etc/profile :
+	export NXJ_HOME=/home/user/Documents/lejosRT/lejos_rt (à adapter pour pointer sur le répertoire lejos_rt !)
+	export JAVA_HOME=/usr/lib/jvm/java-6-openjdk (répertoire d'installation de JDK)
+	export PATH=$PATH:$JAVA_HOME/bin:$NXJ_HOME/bin
+- redémarrer la session
+
+
+****************************************************************************************
+
+2. Installation du compilateur arm-elf
+--------------------------------------
+
+- installer les paquets suivants ainsi que leurs dépendances :
+	* curl
+	* gcc
+	* libmpfr-dev
+	* Texinfo
+	* make
+	* gnustep-make
+	* libgmp3-dev
+	* libmpfr1|dbl
+	* libncurses5-dev
+	* libncurses5
+- se placer dans le répertoire /lejosRT/GNU-arm-toolchain/ et lancer le script "./build_arm_toolchain.sh"
+
+A la fin de l'installation :
+- pour utiliser le compilateur :
+	* exécuter dans le terminal "source env.sh" (script créer lors de l'installation du compilateur)
+	* OU modifier les variables d'environnement en ajoutant à la fin du fichier /etc/profile :
+	export PATH=$PATH:/home/user/Documents/lejosRT/GNU-arm-toolchain/install/bin
+	  puis redémarrer la session	
+Le premier choix est à privilégier car ce compilateur ne servira qu'une seule fois leur de l'installation
+de LeJosRT. Lors d'une mise à jour ou d'une réinstallation, rexeécuter la commande "source env.sh" auparavant.
+
+
+****************************************************************************************
+
+3. Installation de LeJosRT
+--------------------------
+
+- se placer dans le répertoire /lejosRT/lejos_rt/install et exécuter le script "./install_lib.sh"
+- se placer dans le répertoire /lejosRT/lejos_rt/build et taper "ant". Il ne doit pas se produire d'erreurs.
+Si c'était le cas, reprendre les étapes du paragraphe "1. Prérequis". 
+- Flasher le firmware du Lego avec la nouvelle machine virtuelle : connecter le Lego à l'ordinateur, l'allumer et
+se placer dans le répertoire /lejosRT/lejos_rt/install. Lancer le script "./flashfw.sh". Si cela ne fonctionne pas,
+relancer le script après avoir appuyé pendant plus de 4 secondes sur le bouton situé à l'arrière du robot (mise en 
+mode flash). Si le robot n'est pas détecté, redémarrer l'ordinateur.
+
+
+****************************************************************************************
+
+4. Compilation et lancement de programmes sur la brique Lego NXT
+----------------------------------------------------------------
+
+Les programmes .java doivent être placés dans le répertoire /lejosRT/prog/src .
+
+Pour les compiler et les uploader sur le robot :
+- se placer dans le répertoire /lejosRT/prog/src
+- connecter le Lego à l'ordinateur et l'allumer
+- exécuter le script "./installprog.sh <nom_du_fichier.java>"
+
+
+****************************************************************************************
+
+5. Mises à jour / Modifications des sources de LeJosRT
+----------------------------------------------------------------
+
+Lors de mises à jour ou de modifications des sources de LeJosRT, seuls les répertoires projects/ et src/ de
+lejos_rt/ sont modifiés. Pour appliquer ces changements, 
+	* se placer dans /lejosRT/GNU-arm-toolchain et exécuter "source env.sh"
+	* exécuter l'étape "3. Installation de LeJosRT".
+
+
+
